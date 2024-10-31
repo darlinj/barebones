@@ -16,6 +16,7 @@ locals {
     ".png"  = "image/png"
     ".svg"  = "image/svg+xml"
     ".jpg"  = "image/jpeg"
+    ".jpeg" = "image/jpeg"
     ".gif"  = "image/gif"
   }
 }
