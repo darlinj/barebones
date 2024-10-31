@@ -1,0 +1,12 @@
+{
+  "name": "barebones-app",
+  "version": "1.0.0",
+  "description": "barebones app to reuse in projects",
+  "main": "index.js",
+  "scripts": {
+    "deploy_infra": "terraform -chdir=infrastructure apply -var-file=prod.tfvars"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

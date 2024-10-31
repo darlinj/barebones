@@ -28,7 +28,7 @@ You may not need the `AWS_SESSION_TOKEN` if you are using simple IAM users
 
 ## AWS credentials as in `~/.aws/credentials`
 
-In you ~/.aws/credentials file:
+In your ~/.aws/credentials file:
 
 ```
 ...
@@ -57,7 +57,7 @@ edit the `./infrastructure/providers.tf` file to point to the bucket created abo
 ```
   backend "s3" {
     bucket = "YOUR BUCKET NAME HERE"
-    key = "YOUR_S3_KEY" #This is like the directory that you want the state stored in.  It can be useful if you want to store other things in this bucket
+    key = "YOUR_S3_KEY" #This is the "directory" that you want the state stored in.  It can be useful if you want to store other things in this bucket
     region = "YOUR REGION"
   }
 ```
@@ -71,3 +71,5 @@ edit the `./infrastructure/providers.tf` file to point to the bucket created abo
 ## Install node locally
 
 [Node installation](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+
+##
