@@ -1,8 +1,14 @@
 type Query {
   getData(id: ID!): Data
+  getPublicData(id: ID!): PublicData @aws_api_key
 }
 
 type Data {
+  id: ID!
+  name: String!
+}
+
+type PublicData @aws_api_key {
   id: ID!
   name: String!
 }
