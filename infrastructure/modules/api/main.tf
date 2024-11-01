@@ -5,7 +5,7 @@ resource "aws_appsync_graphql_api" "api" {
   authentication_type = "AMAZON_COGNITO_USER_POOLS"
 
   user_pool_config {
-    user_pool_id   = aws_cognito_user_pool.barebones.id
+    user_pool_id   = aws_cognito_user_pool.cognito.id
     default_action = "ALLOW"
   }
 
@@ -17,7 +17,7 @@ resource "aws_appsync_graphql_api" "api" {
 
 resource "aws_appsync_datasource" "datasource" {
   api_id = aws_appsync_graphql_api.api.id
-  name   = "barebones"
+  name   = "dumb_datasource"
   type   = "NONE"
 }
 
