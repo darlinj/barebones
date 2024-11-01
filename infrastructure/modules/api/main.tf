@@ -15,6 +15,11 @@ resource "aws_appsync_graphql_api" "api" {
 
 }
 
+resource "aws_appsync_api_key" "api_key" {
+  api_id  = aws_appsync_graphql_api.api.id
+  expires = "2050-01-01T00:00:00Z"
+}
+
 resource "aws_appsync_datasource" "datasource" {
   api_id = aws_appsync_graphql_api.api.id
   name   = "dumb_datasource"
