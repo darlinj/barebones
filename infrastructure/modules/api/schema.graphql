@@ -1,5 +1,6 @@
 type Query {
   getData(id: ID!): Data
+  getLambdaData: LambdaData
   getPublicData(id: ID!): PublicData @aws_api_key
 }
 
@@ -11,4 +12,8 @@ type Data {
 type PublicData @aws_api_key {
   id: ID!
   name: String!
+}
+
+type LambdaData {
+  message: String!
 }

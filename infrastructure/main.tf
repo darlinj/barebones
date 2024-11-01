@@ -1,5 +1,6 @@
 module "api" {
-  source = "./modules/api"
+  source      = "./modules/api"
+  common_tags = var.common_tags
 }
 
 module "website" {
