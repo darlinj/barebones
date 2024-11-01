@@ -1,3 +1,7 @@
+module "api" {
+  source = "./modules/api"
+}
+
 module "website" {
   source             = "./modules/website"
   domain_name        = var.domain_name

@@ -4,6 +4,7 @@
   "description": "barebones app to reuse in projects",
   "main": "index.js",
   "scripts": {
+    "predeploy_infra": "terraform -chdir=infrastructure init",
     "deploy_infra": "terraform -chdir=infrastructure apply -var-file=prod.tfvars",
     "build": "cd apps/website && npm run build"
   },

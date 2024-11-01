@@ -1,0 +1,8 @@
+type Query {
+  getData(id: ID!): Data
+}
+
+type Data {
+  id: ID!
+  name: String!
+}
