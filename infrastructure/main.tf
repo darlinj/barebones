@@ -26,6 +26,30 @@ locals {
   }
 }
 
+resource "local_file" "config_file" {
+  content  = <<EOF
+window.config = {
+  COGNITO_USERPOOL_ID: "${module.api.cognito_userpool_id}",
+  COGNITO_USERPOOL_CLIENT_ID: "${module.api.cognito_userpool_client_id}",
+  GRAPHQL_API: "${module.api.appsync_api_url}",
+  API_KEY: "${module.api.appsync_api_key}"
+};
+EOF
+  filename = "${path.module}/../apps/website/public/config.js.${var.environment}"
+}
+
+resource "aws_s3_object" "config_file" {
+  bucket = module.website.web_content_bucket.id
+  key    = "config.js"
+  source = "${path.module}/../apps/website/public/config.js.${var.environment}"
+  #   etag         = filemd5("${path.module}/../apps/website/public/config.js.${var.environment}")
+  content_type = "application/javascript"
+  metadata = {
+    content_type = "application/javascript"
+  }
+  depends_on = [local_file.config_file]
+}
+
 resource "aws_s3_object" "web_content" {
   for_each     = fileset("../apps/website/dist", "**")
   bucket       = module.website.web_content_bucket.id
@@ -36,7 +60,6 @@ resource "aws_s3_object" "web_content" {
   metadata = {
     cache-control = each.value == "index.html" ? "no-cache" : ""
     content_type  = lookup(local.mime_types, regex("\\.[^.]+$", each.value), "application/octet-stream")
-    # content-type  = "text/html"
   }
 
 }
