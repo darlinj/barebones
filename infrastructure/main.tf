@@ -26,28 +26,26 @@ locals {
   }
 }
 
-resource "local_file" "config_file" {
-  content  = <<EOF
-window.config = {
-  COGNITO_USERPOOL_ID: "${module.api.cognito_userpool_id}",
-  COGNITO_USERPOOL_CLIENT_ID: "${module.api.cognito_userpool_client_id}",
-  GRAPHQL_API: "${module.api.appsync_api_url}",
-  API_KEY: "${module.api.appsync_api_key}"
-};
+locals {
+  env_file_content = <<EOF
+VITE_REGION: "${data.aws_region.current.name}",
+VITE_COGNITO_USERPOOL_ID: "${module.api.cognito_userpool_id}",
+VITE_COGNITO_USERPOOL_CLIENT_ID: "${module.api.cognito_userpool_client_id}",
+VITE_GRAPHQL_API: "${module.api.appsync_api_url}",
+VITE_API_KEY: "${module.api.appsync_api_key}"
 EOF
-  filename = "${path.module}/../apps/website/public/config.js.${var.environment}"
+}
+
+
+resource "local_file" "config_file" {
+  content  = local.env_file_content
+  filename = "${path.module}/../apps/website/production.env"
 }
 
 resource "aws_s3_object" "config_file" {
-  bucket = module.website.web_content_bucket.id
-  key    = "config.js"
-  source = "${path.module}/../apps/website/public/config.js.${var.environment}"
-  #   etag         = filemd5("${path.module}/../apps/website/public/config.js.${var.environment}")
-  content_type = "application/javascript"
-  metadata = {
-    content_type = "application/javascript"
-  }
-  depends_on = [local_file.config_file]
+  bucket  = module.website.web_content_bucket.id
+  key     = ".env"
+  content = local.env_file_content
 }
 
 resource "aws_s3_object" "web_content" {
