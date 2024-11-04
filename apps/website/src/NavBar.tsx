@@ -5,8 +5,27 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const login = () => {
+    navigate("/login");
+  };
+  const navigateHome = () => {
+    navigate("/");
+  };
   return (
     <AppBar position="static">
       <Toolbar>
@@ -16,13 +35,33 @@ const NavBar: React.FC = () => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
         >
           <MenuIcon />
         </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={navigateHome}>Some Menu</MenuItem>
+          <MenuItem onClick={login}>Login</MenuItem>
+        </Menu>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Barebones
+          <Link className="title" to="/">
+            Barebones
+          </Link>
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button onClick={login} color="inherit">
+          Login
+        </Button>
       </Toolbar>
     </AppBar>
   );

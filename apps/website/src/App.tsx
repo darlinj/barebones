@@ -8,6 +8,9 @@ import {
   signOut,
 } from "aws-amplify/auth";
 import NavBar from "./NavBar";
+import { Route, Routes } from "react-router-dom";
+import Home from "./home";
+import Login from "./Login";
 
 const clientId = import.meta.env.VITE_COGNITO_USERPOOL_CLIENT_ID;
 const cognitoId = import.meta.env.VITE_COGNITO_USERPOOL_ID;
@@ -27,9 +30,10 @@ const App: React.FC = () => {
   return (
     <>
       <NavBar />
-      <div>
-        <img src={barebones} className="logo" alt="Barebones logo" />
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 };

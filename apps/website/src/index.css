@@ -3,3 +3,11 @@
   display: flex;
   place-items: center;
 }
+
+a {
+  text-decoration: none;
+}
+
+.title {
+  color: white
+}
