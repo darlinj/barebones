@@ -1,5 +1,8 @@
+data "aws_region" "current" {}
+
 module "api" {
   source      = "./modules/api"
+  domain_name = var.domain_name
   common_tags = var.common_tags
 }
 
