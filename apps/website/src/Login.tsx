@@ -1,12 +1,18 @@
 import React from "react";
-import barebones from "/barebones.jpeg";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 
 const Login: React.FC = () => {
+  // const { user, signOut } = useAuthenticator((context) => [context.user]);
   return (
-    <div>
-      <h1>Login</h1>
-      <img src={barebones} className="logo" alt="Barebones logo" />
-    </div>
+    <Authenticator>
+      {/* {({ signOut, user }) => (
+        <div>
+          <h1>Hello {user?.username}</h1>
+          <button onClick={signOut}>Sign out</button>
+        </div>
+      )} */}
+    </Authenticator>
   );
 };
 
