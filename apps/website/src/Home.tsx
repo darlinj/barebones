@@ -1,44 +1,32 @@
 import React, { useEffect, useState } from "react";
 import barebones from "/barebones.jpeg";
-import { generateClient, GraphQLResult } from "aws-amplify/api";
-// import { graphqlOperation } from "aws-amplify";
 
-import { GetPublicDataQuery, PublicData } from "./API";
-
+import { generateClient } from "aws-amplify/api";
+import { GetPublicDataQueryVariables, PublicData } from "./API";
 import { getPublicData } from "./graphql/queries";
-
 const client = generateClient();
-
-export const listItems = /* GraphQL */ `
-  query MyQuery {
-    getPublicData(id: "2") {
-      name
-    }
-  }
-`;
 
 const Home: React.FC = () => {
   const [items, setItems] = useState("");
 
-  const fetchPublicData = async (): Promise<GetPublicDataQuery> => {
+  const fetchPublicData = async (
+    variables: GetPublicDataQueryVariables
+  ): Promise<PublicData | undefined | null> => {
     try {
-      const response = (await client.graphql({
+      const response = await client.graphql({
         query: getPublicData,
-        variables: { id: "1" },
-      })) as {
-        data: GetPublicDataQuery;
-      };
-      return response.data;
+        variables,
+      });
+      console.log(response);
+      return response.data.getPublicData;
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      console.error("Error fetching data:", error);
       throw error;
     }
   };
 
   useEffect(() => {
-    fetchPublicData().then((data) =>
-      setItems(data?.getPublicData?.name || "boo")
-    );
+    fetchPublicData({ id: "1" }).then((data) => setItems(data?.name || "boo"));
   }, []);
   return (
     <div>
