@@ -8,8 +8,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 const NavBar: React.FC = () => {
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -23,6 +25,12 @@ const NavBar: React.FC = () => {
   const login = () => {
     navigate("/login");
   };
+
+  const logout = () => {
+    signOut();
+    navigate("/");
+  };
+
   const navigateHome = () => {
     navigate("/");
   };
@@ -59,9 +67,15 @@ const NavBar: React.FC = () => {
             Barebones
           </Link>
         </Typography>
-        <Button onClick={login} color="inherit">
-          Login
-        </Button>
+        {user ? (
+          <Button onClick={logout} color="inherit">
+            Logout
+          </Button>
+        ) : (
+          <Button onClick={login} color="inherit">
+            Login
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
