@@ -1,38 +1,29 @@
 import React, { useEffect, useState } from "react";
 import barebones from "/barebones.jpeg";
-
-import { generateClient } from "aws-amplify/api";
-import { GetPublicDataQueryVariables, PublicData } from "./API";
-import { getPublicData } from "./graphql/queries";
-const client = generateClient();
+import { fetchPublicData } from "./api/fetchPublicData";
+import { fetchData } from "./api/fetchData";
+import { getCurrentUser } from "@aws-amplify/auth";
 
 const Home: React.FC = () => {
-  const [items, setItems] = useState("");
-
-  const fetchPublicData = async (
-    variables: GetPublicDataQueryVariables
-  ): Promise<PublicData | undefined | null> => {
-    try {
-      const response = await client.graphql({
-        query: getPublicData,
-        variables,
-      });
-      console.log(response);
-      return response.data.getPublicData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
-    }
-  };
+  const [publicData, setPublicData] = useState("");
+  const [data, setData] = useState("");
 
   useEffect(() => {
-    fetchPublicData({ id: "1" }).then((data) => setItems(data?.name || "boo"));
+    fetchPublicData({ id: "1" }).then((data) =>
+      setPublicData(data?.name || "boo")
+    );
+    getCurrentUser()
+      .then(() => {
+        fetchData({ id: "1" }).then((data) => setData(data?.name || "boo"));
+      })
+      .catch(() => console.log("Login to access this data"));
   }, []);
   return (
     <div>
       <img src={barebones} className="logo" alt="Barebones logo" />
 
-      <h1>{items}</h1>
+      <h1>{publicData}</h1>
+      <h1>{data}</h1>
     </div>
   );
 };

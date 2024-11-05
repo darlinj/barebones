@@ -68,9 +68,12 @@ const NavBar: React.FC = () => {
           </Link>
         </Typography>
         {user ? (
-          <Button onClick={logout} color="inherit">
-            Logout
-          </Button>
+          <>
+            {user.username}
+            <Button onClick={logout} color="inherit">
+              Logout
+            </Button>
+          </>
         ) : (
           <Button onClick={login} color="inherit">
             Login
