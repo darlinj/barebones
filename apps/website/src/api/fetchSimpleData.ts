@@ -1,23 +1,21 @@
 import { generateClient } from "aws-amplify/api";
-import { GetDataQueryVariables, Data } from "../API";
-import { getData } from "../graphql/queries";
-// import { useAuthenticator } from "@aws-amplify/ui-react";
+import { GetLambdaDataQueryVariables, LambdaData } from "../API";
+import { getLambdaData } from "../graphql/queries";
 const client = generateClient();
 import { fetchAuthSession } from "@aws-amplify/auth";
 
-export const fetchData = async (
-  variables: GetDataQueryVariables
-): Promise<Data | undefined | null> => {
-  // const { user } = useAuthenticator((context) => [context.user]);
+export const fetchSimpleData = async (
+  variables: GetLambdaDataQueryVariables
+): Promise<LambdaData | undefined | null> => {
   try {
     const response = await client.graphql({
-      query: getData,
+      query: getLambdaData,
       variables,
       authMode: "userPool",
       authToken:
         (await fetchAuthSession()).tokens?.accessToken.toString() || "",
     });
-    return response.data.getData;
+    return response.data.getLambdaData;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;

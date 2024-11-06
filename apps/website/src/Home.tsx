@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import barebones from "/barebones.jpeg";
 import { fetchPublicData } from "./api/fetchPublicData";
-import { fetchData } from "./api/fetchData";
+import { fetchSimpleData } from "./api/fetchSimpleData";
 import { getCurrentUser } from "@aws-amplify/auth";
 
 const Home: React.FC = () => {
   const [publicData, setPublicData] = useState("");
-  const [data, setData] = useState("");
+  const [lambdaData, setLambdaData] = useState("");
 
   useEffect(() => {
     fetchPublicData({ id: "1" }).then((data) =>
@@ -14,7 +14,9 @@ const Home: React.FC = () => {
     );
     getCurrentUser()
       .then(() => {
-        fetchData({ id: "1" }).then((data) => setData(data?.name || "boo"));
+        fetchSimpleData({ id: "1" }).then((resp) =>
+          setLambdaData(resp?.message || "boo")
+        );
       })
       .catch(() => console.log("Login to access this data"));
   }, []);
@@ -23,7 +25,7 @@ const Home: React.FC = () => {
       <img src={barebones} className="logo" alt="Barebones logo" />
 
       <h1>{publicData}</h1>
-      <h1>{data}</h1>
+      <h1>{lambdaData}</h1>
     </div>
   );
 };
