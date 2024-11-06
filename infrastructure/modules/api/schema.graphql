@@ -11,3 +11,17 @@ type PublicData @aws_api_key @aws_cognito_user_pools {
 type Data {
   message: String!
 }
+
+type Mutation {
+  addData(message: String!): Data
+}
+
+type Subscription {
+  onCreateData: Data @aws_subscribe(mutations: ["addData"])
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
