@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npx @aws-amplify/cli codegen",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -21,6 +22,7 @@
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
+    "@aws-amplify/cli": "^12.13.0",
     "@eslint/js": "^9.13.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

@@ -1,7 +1,7 @@
 import "./App.css";
 import NavBar from "./NavBar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./home";
+import Home from "./Home";
 import Login from "./Login";
 
 const App: React.FC = () => {
