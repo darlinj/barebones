@@ -2,8 +2,8 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type LambdaData = {
-  __typename: "LambdaData",
+export type Data = {
+  __typename: "Data",
   message: string,
 };
 
@@ -13,12 +13,12 @@ export type PublicData = {
   name: string,
 };
 
-export type GetLambdaDataQueryVariables = {
+export type GetSimpleDataQueryVariables = {
 };
 
-export type GetLambdaDataQuery = {
-  getLambdaData?:  {
-    __typename: "LambdaData",
+export type GetSimpleDataQuery = {
+  getSimpleData?:  {
+    __typename: "Data",
     message: string,
   } | null,
 };

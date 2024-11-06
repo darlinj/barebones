@@ -54,10 +54,10 @@ resource "aws_appsync_datasource" "lambda" {
 }
 
 
-resource "aws_appsync_resolver" "get_lambda_data" {
+resource "aws_appsync_resolver" "get_simple_data" {
   api_id      = aws_appsync_graphql_api.api.id
   type        = "Query"
-  field       = "getLambdaData"
+  field       = "getSimpleData"
   data_source = aws_appsync_datasource.lambda.name
 
   request_template = <<EOF
