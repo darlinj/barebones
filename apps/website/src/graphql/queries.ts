@@ -8,14 +8,6 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getData = /* GraphQL */ `query GetData($id: ID!) {
-  getData(id: $id) {
-    id
-    name
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetDataQueryVariables, APITypes.GetDataQuery>;
 export const getLambdaData = /* GraphQL */ `query GetLambdaData {
   getLambdaData {
     message

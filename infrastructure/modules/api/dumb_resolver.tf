@@ -27,26 +27,3 @@ EOF
 }
 EOF
 }
-
-resource "aws_appsync_resolver" "public_resolver" {
-  api_id      = aws_appsync_graphql_api.api.id
-  type        = "Query"
-  field       = "getData"
-  data_source = aws_appsync_datasource.datasource.name
-
-  request_template = <<EOF
-{
-  "version": "2017-02-28",
-  "payload": {
-    "id": "$ctx.args.id"
-  }
-}
-EOF
-
-  response_template = <<EOF
-{
-  "id": $ctx.args.id,
-  "name": "Private Data"
-}
-EOF
-}

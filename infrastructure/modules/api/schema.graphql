@@ -1,12 +1,6 @@
 type Query {
-  getData(id: ID!): Data
   getLambdaData: LambdaData
   getPublicData(id: ID!): PublicData @aws_api_key @aws_cognito_user_pools
-}
-
-type Data {
-  id: ID!
-  name: String!
 }
 
 type PublicData @aws_api_key @aws_cognito_user_pools {
