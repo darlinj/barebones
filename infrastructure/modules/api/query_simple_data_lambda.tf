@@ -1,4 +1,4 @@
-module "lambda_function" {
+module "query_simple_data_lambda" {
   source = "terraform-aws-modules/lambda/aws"
 
   function_name = "querySimpleDataLambda"

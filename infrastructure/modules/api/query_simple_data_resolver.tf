@@ -1,5 +1,5 @@
 
-resource "aws_iam_policy" "lambda1_policy" {
+resource "aws_iam_policy" "query_simple_data_policy" {
   name        = "lambda1-policy"
   description = "Allows access to running a single lambda function"
   policy = jsonencode(({
@@ -11,16 +11,16 @@ resource "aws_iam_policy" "lambda1_policy" {
           "lambda:invokeFunction"
         ],
         "Resource" : [
-          "${module.lambda_function.lambda_function_arn}",
-          "${module.lambda_function.lambda_function_arn}:*"
+          "${module.query_simple_data_lambda.lambda_function_arn}",
+          "${module.query_simple_data_lambda.lambda_function_arn}:*"
         ]
       }
     ]
   }))
 }
 
-resource "aws_iam_role" "lambda_exec" {
-  name = "lambda_exec_role"
+resource "aws_iam_role" "query_simple_data_role" {
+  name = "query_simple_data_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -37,20 +37,20 @@ resource "aws_iam_role" "lambda_exec" {
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attachment" {
-  role       = aws_iam_role.lambda_exec.name
-  policy_arn = aws_iam_policy.lambda1_policy.arn
+  role       = aws_iam_role.query_simple_data_role.name
+  policy_arn = aws_iam_policy.query_simple_data_policy.arn
 }
 
-resource "aws_appsync_datasource" "lambda" {
+resource "aws_appsync_datasource" "query_simple_data_datasource" {
   api_id = aws_appsync_graphql_api.api.id
   name   = "lambda1"
   type   = "AWS_LAMBDA"
 
   lambda_config {
-    function_arn = module.lambda_function.lambda_function_arn
+    function_arn = module.query_simple_data_lambda.lambda_function_arn
   }
 
-  service_role_arn = aws_iam_role.lambda_exec.arn
+  service_role_arn = aws_iam_role.query_simple_data_role.arn
 }
 
 
@@ -58,7 +58,7 @@ resource "aws_appsync_resolver" "get_simple_data" {
   api_id      = aws_appsync_graphql_api.api.id
   type        = "Query"
   field       = "getSimpleData"
-  data_source = aws_appsync_datasource.lambda.name
+  data_source = aws_appsync_datasource.query_simple_data_datasource.name
 
   request_template = <<EOF
 {
