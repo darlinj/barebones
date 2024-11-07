@@ -72,4 +72,15 @@ edit the `./infrastructure/providers.tf` file to point to the bucket created abo
 
 [Node installation](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
 
-##
+# Adding API calls
+
+To add a new API call:
+
+1. Copy one of the directories ending `_lambda` in `/apps`
+1. Update the `./infrastructure/modules/api/schema.graphql` to add the API call you need
+1. Update `./infrastructure/modules/api/locals.tf` to add another member to the map
+1. Deploy the API using `npm run deploy_infra` from the root of the project
+1. You should now be able to go to the AppSync console and see the new API call and do test queries
+1. Edit the lambda to do whatever you need it to do
+1. `cd apps/website` and run `npm run codegen`. This creates the types for the API in the website directory
+1. Edit the website to do whatever you need it to do
