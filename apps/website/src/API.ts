@@ -13,6 +13,17 @@ export type PublicData = {
   name: string,
 };
 
+export type AddDataMutationVariables = {
+  message: string,
+};
+
+export type AddDataMutation = {
+  addData?:  {
+    __typename: "Data",
+    message: string,
+  } | null,
+};
+
 export type GetSimpleDataQueryVariables = {
 };
 
@@ -32,5 +43,15 @@ export type GetPublicDataQuery = {
     __typename: "PublicData",
     id: string,
     name: string,
+  } | null,
+};
+
+export type OnCreateDataSubscriptionVariables = {
+};
+
+export type OnCreateDataSubscription = {
+  onCreateData?:  {
+    __typename: "Data",
+    message: string,
   } | null,
 };

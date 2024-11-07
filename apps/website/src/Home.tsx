@@ -3,6 +3,8 @@ import barebones from "/barebones.jpeg";
 import { fetchPublicData } from "./api/fetchPublicData";
 import { fetchSimpleData } from "./api/fetchSimpleData";
 import { getCurrentUser } from "@aws-amplify/auth";
+import SimpleForm from "./SimpleForm";
+import { addDataMutation } from "./api/addData";
 
 const Home: React.FC = () => {
   const [publicData, setPublicData] = useState("");
@@ -20,12 +22,25 @@ const Home: React.FC = () => {
       })
       .catch(() => console.log("Login to access this data"));
   }, []);
+
+  const handleFormSubmit = (input: string) => {
+    console.log(input);
+    getCurrentUser()
+      .then(() => {
+        addDataMutation({ message: input }).then((resp) =>
+          console.log("That worked!")
+        );
+      })
+      .catch(() => console.log("Login to access this data"));
+  };
+
   return (
     <div>
       <img src={barebones} className="logo" alt="Barebones logo" />
 
       <h1>{publicData}</h1>
       <h1>{lambdaData}</h1>
+      <SimpleForm handleFormSubmit={handleFormSubmit} />
     </div>
   );
 };
