@@ -6,7 +6,7 @@ interface DataTableProps {
   data: string[];
 }
 
-const DataTableComponent: React.FC<DataTableProps> = ({ data }) => {
+const TableComponent: React.FC<DataTableProps> = ({ data }) => {
   const rows: GridRowsProp = data.map((item, index) => ({
     id: index,
     value: item,
@@ -24,4 +24,4 @@ const DataTableComponent: React.FC<DataTableProps> = ({ data }) => {
   );
 };
 
-export default DataTableComponent;
+export default TableComponent;

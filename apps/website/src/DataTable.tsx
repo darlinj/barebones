@@ -3,7 +3,7 @@ import { generateClient } from "aws-amplify/api";
 import { OnCreateDataSubscription } from "./API";
 import { fetchAuthSession } from "@aws-amplify/auth";
 import { onCreateData } from "./graphql/subscriptions";
-import DataTableComponent from "./DataTableComponent";
+import TableComponent from "./TableComponent";
 
 const client = generateClient();
 
@@ -38,7 +38,7 @@ const DataTable: React.FC = () => {
 
   return (
     <div>
-      <DataTableComponent data={tableData} />
+      <TableComponent data={tableData} />
     </div>
   );
 };

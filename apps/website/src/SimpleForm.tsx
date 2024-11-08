@@ -14,6 +14,7 @@ const SimpleForm: React.FC<SimpleFormProps> = ({ handleFormSubmit }) => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setInputValue("");
     handleFormSubmit(inputValue);
   };
 

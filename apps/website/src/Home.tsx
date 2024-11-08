@@ -10,7 +10,7 @@ import DataTable from "./DataTable";
 const Home: React.FC = () => {
   const [loggedIn, setloggedIn] = useState(false);
   const [publicData, setPublicData] = useState("");
-  const [lambdaData, setLambdaData] = useState("");
+  const [privateData, setPrivateData] = useState("");
 
   useEffect(() => {
     getCurrentUser()
@@ -19,14 +19,14 @@ const Home: React.FC = () => {
       })
       .catch(() => setloggedIn(false));
     fetchPublicData({ id: "1" }).then((data) =>
-      setPublicData(data?.name || "Failed to fetch databoo")
+      setPublicData(data?.name || "Failed to fetch data")
     );
   }, []);
 
   useEffect(() => {
     if (!loggedIn) return;
     fetchSimpleData({ id: "1" }).then((resp) =>
-      setLambdaData(resp?.message || "Failed to fetch data")
+      setPrivateData(resp?.message || "Failed to fetch data")
     );
   }, [loggedIn]);
 
@@ -48,9 +48,9 @@ const Home: React.FC = () => {
       <h1>{publicData}</h1>
       {loggedIn && (
         <>
-          <h1>{lambdaData}</h1>
-          <SimpleForm handleFormSubmit={handleFormSubmit} />
+          <h1>{privateData}</h1>
           <DataTable />
+          <SimpleForm handleFormSubmit={handleFormSubmit} />
         </>
       )}
     </div>
