@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { generateClient } from "aws-amplify/api";
-import { Data } from "./API";
+import { OnCreateDataSubscription } from "./API";
 import { fetchAuthSession } from "@aws-amplify/auth";
 import { onCreateData } from "./graphql/subscriptions";
 import DataTableComponent from "./DataTableComponent";
@@ -9,10 +9,10 @@ const client = generateClient();
 
 const DataTable: React.FC = () => {
   const [tableData, setTableData] = useState<string[]>([]);
-  useEffect(() => {
+
+  const subscription = useMemo(() => {
     let subscription = { unsubscribe: () => {} };
     fetchAuthSession().then((token) => {
-      console.log("getting credentials");
       subscription = client
         .graphql({
           query: onCreateData,
@@ -20,21 +20,19 @@ const DataTable: React.FC = () => {
           authToken: token.tokens?.accessToken.toString() || "",
         })
         .subscribe({
-          next: (result: any) => {
+          next: (result: { data: OnCreateDataSubscription }) => {
             setTableData((previousTableData) => [
               ...previousTableData,
-              result.data.onCreateData.message,
+              result?.data?.onCreateData?.message || "Error",
             ]);
-            console.log(
-              "New message received:",
-              result.data.onCreateData.message
-            );
           },
           error: (error: any) => console.warn(error),
         });
     });
-    console.log("Running useEffect");
+    return subscription;
+  }, []);
 
+  useEffect(() => {
     return () => subscription.unsubscribe();
   }, []);
 

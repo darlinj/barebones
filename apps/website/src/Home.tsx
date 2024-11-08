@@ -5,14 +5,12 @@ import { fetchSimpleData } from "./api/fetchSimpleData";
 import { getCurrentUser } from "@aws-amplify/auth";
 import SimpleForm from "./SimpleForm";
 import { addDataMutation } from "./api/addData";
-import { onCreateData } from "./graphql/subscriptions";
 import DataTable from "./DataTable";
 
 const Home: React.FC = () => {
   const [loggedIn, setloggedIn] = useState(false);
   const [publicData, setPublicData] = useState("");
   const [lambdaData, setLambdaData] = useState("");
-  const [subscriptionList, setSubscriptionList] = useState([]);
 
   useEffect(() => {
     getCurrentUser()
@@ -21,14 +19,14 @@ const Home: React.FC = () => {
       })
       .catch(() => setloggedIn(false));
     fetchPublicData({ id: "1" }).then((data) =>
-      setPublicData(data?.name || "boo")
+      setPublicData(data?.name || "Failed to fetch databoo")
     );
   }, []);
 
   useEffect(() => {
     if (!loggedIn) return;
     fetchSimpleData({ id: "1" }).then((resp) =>
-      setLambdaData(resp?.message || "boo")
+      setLambdaData(resp?.message || "Failed to fetch data")
     );
   }, [loggedIn]);
 
@@ -37,7 +35,7 @@ const Home: React.FC = () => {
     getCurrentUser()
       .then(() => {
         addDataMutation({ message: input }).then((resp) =>
-          console.log("That worked!")
+          console.log("Successfully added data")
         );
       })
       .catch(() => console.log("Login to access this data"));
