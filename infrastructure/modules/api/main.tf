@@ -1,5 +1,5 @@
 resource "aws_appsync_graphql_api" "api" {
-  name   = "barebones-api"
+  name   = "api${var.name_postfix}"
   schema = file("modules/api/schema.graphql")
 
   authentication_type = "AMAZON_COGNITO_USER_POOLS"

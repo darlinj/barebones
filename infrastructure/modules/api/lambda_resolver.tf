@@ -1,7 +1,7 @@
 
 resource "aws_iam_policy" "lambda_policy" {
   for_each    = local.lambdas
-  name        = "${each.key}_policy"
+  name        = "${each.key}_policy${var.name_postfix}"
   description = "Allows access to running a the ${each.key} lambda function"
   tags        = var.common_tags
   policy = jsonencode(({
@@ -21,7 +21,7 @@ resource "aws_iam_policy" "lambda_policy" {
 
 resource "aws_iam_role" "lambda_role" {
   for_each = local.lambdas
-  name     = "${each.key}_role"
+  name     = "${each.key}_role${var.name_postfix}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -46,7 +46,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
 resource "aws_appsync_datasource" "lambda_datasource" {
   for_each = local.lambdas
   api_id   = aws_appsync_graphql_api.api.id
-  name     = "${each.key}_datasource"
+  name     = "${each.key}_datasource${var.name_postfix}"
   type     = "AWS_LAMBDA"
 
   lambda_config {

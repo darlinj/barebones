@@ -1,21 +1,21 @@
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment that this is deploying to."
 }
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "The domain name for the website."
 }
 
-variable "domain_prefix" {
-  type = string
-  description = "The prefix for the website."
+variable "name_postfix" {
+  type        = string
+  description = "The postfix for naming resources"
 }
 
-variable "bucket_name" {
-  type = string
-  description = "The name of the bucket without the www. prefix. Normally domain_name."
+variable "domain_prefix" {
+  type        = string
+  description = "The prefix for the website."
 }
 
 variable "cloudfront_aliases" {

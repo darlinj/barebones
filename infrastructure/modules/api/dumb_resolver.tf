@@ -1,7 +1,7 @@
 
 resource "aws_appsync_datasource" "datasource" {
   api_id = aws_appsync_graphql_api.api.id
-  name   = "dumb_datasource"
+  name   = "dumb_datasource${var.name_postfix}"
   type   = "NONE"
 }
 
@@ -23,7 +23,7 @@ EOF
   response_template = <<EOF
 {
   "id": $ctx.args.id,
-  "name": "Public Data"
+  "name": "This data can be seen by anyone"
 }
 EOF
 }

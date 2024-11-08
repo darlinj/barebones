@@ -1,7 +1,7 @@
 
 
 resource "aws_cognito_user_pool" "cognito" {
-  name                     = "cognito-user-pool"
+  name                     = "cognito-user-pool${var.name_postfix}"
   auto_verified_attributes = ["email"]
 
   email_configuration {
@@ -20,7 +20,7 @@ resource "aws_cognito_user_pool" "cognito" {
 }
 
 resource "aws_cognito_user_pool_client" "cognito" {
-  name            = "cognito-user-pool-client"
+  name            = "cognito-user-pool-client${var.name_postfix}"
   user_pool_id    = aws_cognito_user_pool.cognito.id
   generate_secret = false
 }

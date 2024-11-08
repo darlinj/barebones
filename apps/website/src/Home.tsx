@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     getCurrentUser()
       .then(() => {
         addDataMutation({ message: input }).then((resp) =>
-          console.log("Successfully added data")
+          console.log(`Successfully added data: ${resp?.message}`)
         );
       })
       .catch(() => console.log("Login to access this data"));
