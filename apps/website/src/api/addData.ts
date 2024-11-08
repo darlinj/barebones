@@ -1,8 +1,9 @@
 import { generateClient } from "aws-amplify/api";
 import { AddDataMutationVariables, Data } from "../API";
-const client = generateClient();
 import { fetchAuthSession } from "@aws-amplify/auth";
 import { addData } from "../graphql/mutations";
+
+const client = generateClient();
 
 export const addDataMutation = async (
   variables: AddDataMutationVariables
