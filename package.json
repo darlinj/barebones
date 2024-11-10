@@ -6,9 +6,14 @@
   "scripts": {
     "predeploy_infra": "terraform -chdir=infrastructure init",
     "deploy_infra": "terraform -chdir=infrastructure apply -var-file=prod.tfvars",
-    "build": "cd apps/website && npm run build"
+    "build": "cd apps/website && npm run build",
+    "deploy_website": "./scripts/deploy_website.sh",
+    "deploy_all": "run-s deploy_infra build deploy_website"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }

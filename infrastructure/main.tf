@@ -46,17 +46,6 @@ resource "local_file" "config_file" {
   filename = "${path.module}/../apps/website/.env"
 }
 
-resource "aws_s3_object" "web_content" {
-  for_each      = fileset("../apps/website/dist", "**")
-  bucket        = module.website.web_content_bucket.id
-  key           = each.value
-  source        = "../apps/website/dist/${each.value}"
-  etag          = filemd5("../apps/website/dist/${each.value}")
-  content_type  = lookup(local.mime_types, regex("\\.[^.]+$", each.value), "application/octet-stream")
-  cache_control = each.value == "index.html" ? "no-cache" : ""
-  metadata = {
-    cache-control = each.value == "index.html" ? "no-cache" : ""
-    content_type  = lookup(local.mime_types, regex("\\.[^.]+$", each.value), "application/octet-stream")
-  }
-
+output "bucket_name" {
+  value = module.website.web_content_bucket.id
 }
