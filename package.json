@@ -4,11 +4,10 @@
   "description": "barebones app to reuse in projects",
   "main": "index.js",
   "scripts": {
-    "predeploy_infra": "terraform -chdir=infrastructure init",
-    "deploy_infra": "terraform -chdir=infrastructure apply -var-file=prod.tfvars",
+    "deploy_infra": "./scripts/deploy_infra.sh",
     "build": "cd apps/website && npm run build",
     "deploy_website": "./scripts/deploy_website.sh",
-    "deploy_all": "run-s deploy_infra build deploy_website"
+    "deploy_all": "run-s \"deploy_infra -- {1}\" build deploy_website --"
   },
   "keywords": [],
   "author": "",
