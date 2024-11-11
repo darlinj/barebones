@@ -6,5 +6,4 @@ fi
 
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 ENV=$1
-terraform -chdir=${SCRIPT_DIR}/../infrastructure init -reconfigure -backend-config="key=terraform-state-${ENV}"
-terraform -chdir=${SCRIPT_DIR}/../infrastructure apply -var-file=${ENV}.tfvars -var="environment=${ENV}"
+cd apps/website && npm run build -- --mode ${ENV}

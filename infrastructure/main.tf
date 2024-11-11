@@ -43,7 +43,7 @@ EOF
 
 resource "local_file" "config_file" {
   content  = local.env_file_content
-  filename = "${path.module}/../apps/website/.env"
+  filename = "${path.module}/../apps/website/.env.${var.environment}"
 }
 
 output "bucket_name" {

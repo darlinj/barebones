@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "deploy_infra": "./scripts/deploy_infra.sh",
-    "build": "cd apps/website && npm run build",
+    "build": "./scripts/build_website.sh",
     "deploy_website": "./scripts/deploy_website.sh",
-    "deploy_all": "run-s \"deploy_infra -- {1}\" build deploy_website --"
+    "deploy_all": "run-s \"deploy_infra -- {1}\" \"build -- {1}\" \"deploy_website {1}\" --"
   },
   "keywords": [],
   "author": "",

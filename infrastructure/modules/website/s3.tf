@@ -1,7 +1,8 @@
 # S3 bucket for website.
 resource "aws_s3_bucket" "www_bucket" {
-  bucket = local.bucket_name
-  tags   = var.common_tags
+  bucket        = local.bucket_name
+  tags          = var.common_tags
+  force_destroy = true
 }
 data "aws_s3_bucket" "content_bucket" {
   bucket = aws_s3_bucket.www_bucket.bucket

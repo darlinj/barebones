@@ -84,3 +84,26 @@ To add a new API call:
 1. Edit the lambda to do whatever you need it to do
 1. `cd apps/website` and run `npm run codegen`. This creates the types for the API in the website directory
 1. Edit the website to do whatever you need it to do
+
+# To add a new deployment environment
+
+Copy `infrastructure/prod.tfvars` to an file named the new environment e.g. `myenv.tfvars`
+
+Change the file:
+
+```
+# This is the hosting domain.  This should be set up to point to a hosted zone in route53 with the same name asa the domain.
+# This plan will create a new A record in the hosted zone that points to the created cloud front distribution
+domain_name = "shadow-it.cc"
+# This is the subdomain that will be added to the domain name to produce the domain for this web site.
+domain_prefix = "myenv"
+common_tags = {
+  Project = "Barebones project"
+}
+```
+
+then run:
+
+```
+npm run deploy_all -- myenv
+```
