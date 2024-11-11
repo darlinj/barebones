@@ -7,6 +7,7 @@
     "deploy_infra": "./scripts/deploy_infra.sh",
     "build": "./scripts/build_website.sh",
     "deploy_website": "./scripts/deploy_website.sh",
+    "destroy_environment": "./scripts/destroy_environment.sh",
     "deploy_all": "run-s \"deploy_infra -- {1}\" \"build -- {1}\" \"deploy_website {1}\" --"
   },
   "keywords": [],
