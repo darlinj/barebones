@@ -44,7 +44,34 @@ Then
 export AWS_PROFILE=my_profile
 ```
 
-## Once only - create the bucket to store the terraform state in:
+# Install dependencies
+
+## Install Terraform locally
+
+[Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+
+## Install node locally
+
+[Node installation](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+
+# Getting started
+
+## Get the code
+
+```
+git clone git@github.com:darlinj/barebones.git yourproject
+```
+
+## Replace the origin
+
+Replace the origin so you can add an origin push code to your repo
+
+```
+git remove origin/main
+git remote add origin git@github.com:darlinj/myproject.git
+```
+
+## create the bucket to store the terraform state in:
 
 Terraform can store it's state info in numerous places. In this example we use an S3 bucket. The name needs to be globally unique so you will need to use a different name from below
 
@@ -62,15 +89,34 @@ edit the `./infrastructure/providers.tf` file to point to the bucket created abo
   }
 ```
 
-# Install dependencies
+## Install npm packages
 
-## Install Terraform locally
+In the root of the project run
 
-[Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+```
+npm i
+cd apps/website
+npm i
+```
 
-## Install node locally
+## Rename from Barebones to yourAppName
 
-[Node installation](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+Search for all occurrences of Barebones and replace with the name of your app
+
+## Register your root domain and create your Hosted zone
+
+1. Register a domain (preferably in Route53) - Menu is `Registered domains` in route53
+1. Create a hosted zone in Route53
+1. Point the registered domain name servers at the hosted zones NS record DNS servers
+1. Change the domain_name variable in `./infrastructure/prod.tfvars` and `./infrastructure/dev.tfvars` to match the domain that you have created
+
+## Build and deploy
+
+```
+npm run deploy_infra -- prod
+npm run build -- prod
+npm run deploy_website -- prod
+```
 
 # Adding API calls
 

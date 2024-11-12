@@ -13,7 +13,6 @@ terraform {
 
   backend "s3" {
     bucket = "terraform-state-store-barebones-joe"
-    key    = "terraform-state"
     region = "eu-west-2"
   }
 }
