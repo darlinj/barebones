@@ -1,4 +1,4 @@
-domain_name = "somedomain.com"
+domain_name = "shadow-it.cc"
 # This is the hosting domain.  This should be set up to point to a hosted zone in route53 with the same name asa the domain.  
 # This plan will create a new A record in the hosted zone that points to the created cloud front distribution
 domain_prefix = "barebones"

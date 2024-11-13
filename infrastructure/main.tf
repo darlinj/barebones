@@ -8,7 +8,11 @@ module "api" {
 }
 
 module "website" {
-  source             = "./modules/website"
+  source = "./modules/website"
+  providers = {
+    aws              = aws
+    aws.acm-provider = aws.acm-provider
+  }
   domain_name        = var.domain_name
   domain_prefix      = var.domain_prefix
   environment        = var.environment
