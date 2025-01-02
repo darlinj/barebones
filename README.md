@@ -67,8 +67,9 @@ git clone git@github.com:darlinj/barebones.git yourproject
 Replace the origin so you can add an origin push code to your repo
 
 ```
-git remove origin/main
+git remote rm origin
 git remote add origin git@github.com:darlinj/myproject.git
+git push --set-upstream origin main
 ```
 
 ## create the bucket to store the terraform state in:
@@ -79,14 +80,18 @@ Terraform can store it's state info in numerous places. In this example we use a
 aws s3 mb s3://terraform-state-store-barebones-xyz
 ```
 
-edit the `./infrastructure/providers.tf` file to point to the bucket created above:
+edit the `./infrastructure/terraform.tf` file to point to the bucket created above:
 
 ```
+terraform {
+  ...
+
   backend "s3" {
-    bucket = "YOUR BUCKET NAME HERE"
-    key = "YOUR_S3_KEY" #This is the "directory" that you want the state stored in.  It can be useful if you want to store other things in this bucket
-    region = "YOUR REGION"
+    bucket = "terraform-state-store-barebones-xyz"
+    region = "eu-west-2"
   }
+}
+
 ```
 
 ## Install npm packages
